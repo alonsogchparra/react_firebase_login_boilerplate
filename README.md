@@ -30,3 +30,20 @@ measurementId: MEASUREMENTID_CODE
 ```
 
 This info is different with each project, so be attent to copy well the info on your project.
+
+Also you have to add rules on the firebase project you created to make work the users you going to add like this
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /users/{userId} {
+    	allow create;
+      allow read: if request.auth.uid != null
+      allow write: if request.auth.uid == userId
+    }
+  }
+}
+```
+
+And beside this enabled the email/password authentication
